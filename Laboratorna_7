@@ -1,0 +1,73 @@
+#словник із даними
+institutions = {
+    "School_good": {"type": "school", "students": 400},
+    "Techical_College": {"type": "college", "students": 200},
+    "University_Go": {"type": "vocational", "students": 150},
+    "School_famous": {"type": "school", "students": 350},
+    "Medicine_college": {"type": "college", "students": 300},
+    "School_best": {"type": "school", "students": 500},
+}
+
+#функція виведення всіх значень словника
+def print_institutions(institutions):
+    for name, data in institutions.items():
+        print(f"{name} ({data['type']}): {data['students']} students")
+
+#функція додавання запису до словника
+def add_institution(institutions, name, institution_type, students):
+    institutions[name] = {"type": institution_type, "students": students}
+    print(f"Added {name} ({institution_type}): {students} students")
+
+#функція видалення запису зі словника
+def delete_institution(institutions, name):
+    if name in institutions:
+        del institutions[name]
+        print(f"Deleted {name}")
+    else:
+        print(f"Error: {name} not found in the dictionary.")
+
+#функція перегляду вмісту словника за відсортованими ключами
+def print_sorted_institutions(institutions):
+    sorted_institutions = {k: institutions[k] for k in sorted(institutions)}
+    print("Institutions sorted by name:")
+    print_institutions(sorted_institutions)
+
+#функція обчислення загальної кількості учнів у школах
+def total_students_in_schools(institutions):
+    total_students = sum(data['students'] for data in institutions.values() if data['type'] == 'school')
+    print(f"Total number of students in schools: {total_students}")
+    return total_students
+
+#діалог роботи зі словником
+def main():
+    while True:
+        print("\nChoose an action:")
+        print("1. Display all institutions")
+        print("2. Add a new institution")
+        print("3. Delete an institution")
+        print("4. Display institutions sorted by name")
+        print("5. Calculate total number of students in schools")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            print_institutions(institutions)
+        elif choice == "2":
+            name = input("Enter the name of the institution: ")
+            institution_type = input("Enter the type (school/college/university): ")
+            students = int(input("Enter the number of students: "))
+            add_institution(institutions, name, institution_type, students)
+        elif choice == "3":
+            name = input("Enter the name of the institution to delete: ")
+            delete_institution(institutions, name)
+        elif choice == "4":
+            print_sorted_institutions(institutions)
+        elif choice == "5":
+            total_students_in_schools(institutions)
+        elif choice == "6":
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice, try again.")
+main()
